@@ -17,7 +17,7 @@ loadProducts = async (page = 1) => {
     const response = await api.get(`/products?page=${page}`);
 
     const { docs, ...productInfo } = response.data;
-    console.log (productInfo)
+
     this.setState({ products: docs, productInfo, page })
 };
 
