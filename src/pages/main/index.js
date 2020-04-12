@@ -6,6 +6,7 @@ export default class Main extends Component {
     state = {
         products: [],
         productInfo: [],
+        page: 1,
     }
     
     componentDidMount() {
@@ -16,19 +17,32 @@ loadProducts = async (page = 1) => {
     const response = await api.get(`/products?page=${page}`);
 
     const { docs, ...productInfo } = response.data;
+    console.log (productInfo)
+    this.setState({ products: docs, productInfo, page })
+};
 
-    this.setState({ products: docs, productInfo })    
+prevPage = () => {
+    
+    const { page } = this.state;
+    
+    if (page === 1) return;
+
+    const pageNumber = page - 1;
+    
+    this.loadProducts(pageNumber);
 };
 
 nextPage = () => {
-    const { page, productInfo } = this.data;
-
+    const { page, productInfo } = this.state;
+    console.log(page);
+    console.log(productInfo.page);
     if (page === productInfo.page) return;
 
     const pageNumber = page + 1;
     
     this.loadProducts(pageNumber);
-}
+};
+
 
 
     render(){
